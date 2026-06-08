@@ -1,6 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import { config } from './config/env.js';
+import { initDatabase } from './config/initDb.js';
 import { errorHandler } from './middleware/errorHandler.js';
 import authRoutes from './routes/auth.js';
 import documentRoutes from './routes/documents.js';
@@ -26,6 +27,11 @@ app.get('/api/health', (req, res) => {
 
 app.use(errorHandler);
 
-app.listen(config.port, () => {
-  console.log(`ArcMind server running on port ${config.port}`);
-});
+async function start() {
+  await initDatabase();
+  app.listen(config.port, () => {
+    console.log(`ArcMind server running on port ${config.port}`);
+  });
+}
+
+start();
