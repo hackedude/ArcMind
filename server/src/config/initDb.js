@@ -12,10 +12,6 @@ export async function initDatabase() {
     await pool.query(schema);
     console.log('Database schema initialized successfully');
   } catch (err) {
-    if (err.message?.includes('already exists')) {
-      console.log('Schema already initialized');
-    } else {
-      console.error('Database initialization error:', err.message);
-    }
+    console.error('Database initialization error:', err.message);
   }
 }
